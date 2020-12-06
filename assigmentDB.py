@@ -7,7 +7,7 @@
 #
 import sqlite3
 conn = sqlite3.connect('BrandonsNew.db')
-cur = conn.cursor()
+#cur = conn.cursor()
 
 fileList_tuple = ('information.dox','Hello.txt','myImage.png', \
             'myMovie.mpg','World.txt','data.pdf','myPhoto.hpg')        
@@ -25,16 +25,24 @@ with conn:
     conn.commit()
 conn.close()
 
+"""
+Your script will need to read from the supplied list of file
+names at the bottom of this page and determine only the files
+from the list which end with a “.txt” file extension.
+Next, your script should add those file names from the list ending
+with “.txt” file extension within your database.
+Finally, your script should legibly print the qualifying text files to the
+console
+"""
 conn = sqlite3.connect('BrandonsNew.db')
 
-
-
 for x in fileList_tuple:
-    if x.endswith('.txt'):
+    if x.endswith('txt'):
         with conn:
             cur = conn.cursor()
             cur.execute("INSERT INTO tbl_string (col_string) VALUES (?)",(x,))
-        conn.close()
+            print(x)
+conn.close()
 
 
 
