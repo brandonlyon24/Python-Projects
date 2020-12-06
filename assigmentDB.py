@@ -9,7 +9,7 @@ import sqlite3
 conn = sqlite3.connect('BrandonsNew.db')
 cur = conn.cursor()
 
-fileList = ('information.dox','Hello.text','myImage.png', \
+fileList_tuple = ('information.dox','Hello.txt','myImage.png', \
             'myMovie.mpg','World.txt','data.pdf','myPhoto.hpg')        
 
 """
@@ -27,11 +27,19 @@ conn.close()
 
 conn = sqlite3.connect('BrandonsNew.db')
 
-with conn:
-    cur = conn.cursor()
-    cur.execute("INSERT INTO tbl_string(col_string) VALUES (?)",('fileList'))
-    cur.execute("SELECT * FROM tbl_string WHERE col_string LIKE '_txt'")
-    conn.commit()
-conn.close
+
+
+for x in fileList_tuple:
+    if x.endswith('.txt'):
+        with conn:
+            cur = conn.cursor()
+            cur.execute("INSERT INTO tbl_string (col_string) VALUES (?)",(x,))
+        conn.close()
+
+
+
+
+
+
 
 
