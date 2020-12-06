@@ -37,7 +37,7 @@ console
 conn = sqlite3.connect('BrandonsNew.db')
 
 for x in fileList_tuple:
-    if x.endswith('txt'):
+    if x.endswith('.txt'):
         with conn:
             cur = conn.cursor()
             cur.execute("INSERT INTO tbl_string (col_string) VALUES (?)",(x,))
