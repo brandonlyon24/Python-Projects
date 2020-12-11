@@ -8,7 +8,7 @@ import tkinter as tk
 import sqlite3
 
 import websitebuilder
-
+import webbrowser
 
 def center_window(self, w, h): # pass in the tkinter frame (master) reference and the w and h
     screen_width = self.master.winfo_screenwidth()
@@ -25,16 +25,20 @@ def center_window(self, w, h): # pass in the tkinter frame (master) reference an
 def addToList(self):
     var_body = self.txt_body.get()
     
-  
     var_body = ("""<html>
     <body>
-        {}
+        <p>{}</p>
     </body>
 </html>""".format(var_body)) 
     print("{}".format(var_body))
+    f = open("websitebuilder.html", "w")
+    f.write("{}".format(var_body))
+    f.close
+    webbrowser.open_new_tab("websitebuilder.html")
   
     
 
+    
             
          
 
