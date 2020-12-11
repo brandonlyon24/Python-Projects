@@ -16,7 +16,7 @@ f = open("websitebuilder.html", "w")
 
 f.close()
 
-webbrowser.open_new_tab("websitebuilder.html")
+
 
 
 class ParentWindow(Frame):
@@ -42,7 +42,7 @@ class ParentWindow(Frame):
 
 
 def load_gui(self):
-    self.lbl_body = tk.Label(self.master,text='Add<p>write text in here<p> for a paragraph')
+    self.lbl_body = tk.Label(self.master,text='Text Added Here will be added to the Body of a website:')
     self.lbl_body.grid(row=0,column=0,padx=(27,0),pady=(10,0),sticky=N+W)
 
 
@@ -54,9 +54,6 @@ def load_gui(self):
 
     self.btn_add = tk.Button(self.master,width=12,height=2,text='Add',command=lambda: Body_func.addToList(self))
     self.btn_add.grid(row=8,column=0,padx=(25,0),pady=(45,10),sticky=W)
-
-    self.btn_add = tk.Button(self.master,width=12,height=2,text='Add to page',command=lambda: Body_func.addToPage(self))
-    self.btn_add.grid(row=8,column=1,padx=(25,0),pady=(45,10),sticky=W)
 
 
 
