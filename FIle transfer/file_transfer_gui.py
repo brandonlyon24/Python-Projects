@@ -33,7 +33,7 @@ class ParentWindow(Frame):
         self.btn_destination = tk.Button(self.master,width=12,height=2,text='Browse',command=lambda:destinationFolder(self)) 
         self.btn_destination.grid(row=6,column=0,padx=(10,10),pady=(10,10),sticky=W)
 
-        self.btn_fileTransfer = tk.Button(self.master,width=12,height=2,text='Transfer',command=lambda: fileTransfer(self, self.custom_source, self.custom_destination))
+        self.btn_fileTransfer = tk.Button(self.master,width=12,height=2,text='Transfer',command=lambda: fileTransfer(self))
         self.btn_fileTransfer.grid(row=4,column=2,padx=(10,10),pady=(10,10),sticky=W)
 
         self.btn_close = tk.Button(self.master,width=12,height=2,text='close',command= exit)
@@ -50,6 +50,7 @@ class ParentWindow(Frame):
 
         self.custom_destination = StringVar()
         self.custom_destination.set('Select a destination directory')
+        
         self.txt_destination = tk.Entry(self.master,text=self.custom_destination)
         self.txt_destination.grid(row=2,column=0,rowspan=1,columnspan=2,padx=(10,10),pady=(10,10),sticky=N+E+W)
 
@@ -65,51 +66,22 @@ class ParentWindow(Frame):
         def sourceFolder(self):
             self.txt_source.delete(0, END)
             folder = filedialog.askdirectory()
-            self.txt_source.insert(0, self.custom_source)
+            self.txt_source.insert(0, folder)
 
 
 
         def destinationFolder(self):
-            folder = filedialog.askdirectory()
             self.txt_destination.delete(0, END)
-            self.txt_destination.insert(0, self.custom_destination)
+            folder = filedialog.askdirectory()
+            self.txt_destination.insert(0, folder)
 
 
 
 
+        def fileTransfer(self):
+            custom_source = self.txt_source.get()
+            custom_destination = self.txt_destination.get()
 
-            def create_db(self):
-                conn = sqlite3.connect('file_transfer.db')
-                with conn:
-                    c = conn.cursor()
-                    c.execute("CREATE TABLE IF NOT EXISTS timestamps(unix REAL)")
-                    conn.commit()
-                    c.close()
-                conn.close()
-
-                def read_db(self):
-                    conn = sqlite3.connect('file_transfer.db')
-                    with conn:
-                        c = conn.cursor()
-                        c.execute("SELECT MAX(unix) FROM timestamps")
-                        most_recent = c.fetchone()[0]
-                        most_recent = time.ctime(most_recent)
-                        c.close()
-                    conn.close()
-
-                    # create and populate the label_print widget
-                    self.label_print = tk.Label(self.master, width=60, height=2, text="Last modified: {}".format(most_recent))
-                    self.label_print.grid(row=3, column=0, rowspan=1, columnspan=3, padx=(0, 0), pady=(10, 10))
-
-                read_db(self)
-                
-
-
-
-                
-
-
-        def fileTransfer(self, custom_source, custom_destination):
             now = datetime.datetime.now()
             ago = now - datetime.timedelta(hours=24)
             print('The following .txt files were modified in the last 24 hours: \n')
@@ -125,15 +97,7 @@ class ParentWindow(Frame):
                         shutil.move(file_source, file_destination)
                         print("\tMoved {} to {}.\n".format(files, custom_destination))
                         current_time = time.time()
-                        conn = sqlite3.connect('file_transfer.db')
-                        with conn:
-                            c = conn.cursor()
-                            c.execute("INSERT INTO timestamps VALUES({})".format(current_time))
-                            conn.commit()
-                            c.close()
-                        conn.close()
-
-                        messagebox.showinfo("File Transfer", "Files moved successfully!")
+            
                         
                         
                             
