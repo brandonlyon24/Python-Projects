@@ -8,11 +8,6 @@ import os
 import sys 
 import time
 
-source = '/Users/lyonb/Desktop/FileCheck/Folder A/'
-destination = '/Users/lyonb/Desktop/FileCheck/Folder B/'
-files = os.listdir(source)
-for i in files:
-    shutil.copy(source+i, destination)
 
 class ParentWindow(Frame):
     def __init__(self, master, *args, **kwargs):
@@ -28,55 +23,57 @@ class ParentWindow(Frame):
         arg = self.master
         self.load_gui()
 
-    
-
-
     def load_gui(self):
-        self.lbl_body = tk.Label(self.master,text='Added Here ')
-        self.lbl_body.grid(row=0,column=0,padx=(27,0),pady=(10,0),sticky=N+W)
-
-        self.txt_body = tk.Entry(self.master,text='')
-        self.txt_body.grid(row=1,column=0,rowspan=1,columnspan=2,padx=(30,40),pady=(0,0),sticky=N+E+W)
-
-        self.btn_add = tk.Button(self.master,width=12,height=2,text='Search',command= FileCheck2)
-        self.btn_add.grid(row=2,column=0,padx=(25,0),pady=(25,10),sticky=W)
-        
-        self.btn_add = tk.Button(self.master,width=12,height=2,text='Check Daily',command= browseFiles)
-        self.btn_add.grid(row=3,column=0,padx=(25,0),pady=(25,10),sticky=W)
-
-        self.btn_add = tk.Button(self.master,width=12,height=2,text='Copied Files',command= browseFiles2)
-        self.btn_add.grid(row=2,column=2,padx=(25,0),pady=(25,10),sticky=W)
-
-        self.btn_add = tk.Button(self.master,width=12,height=2,text='File Check',command= FileCheck)
-        self.btn_add.grid(row=3,column=2,padx=(25,0),pady=(25,10),sticky=W)
-
-
     
-def browseFiles(): 
-    filename = filedialog.askopenfilename(initialdir = "/Users/lyonb/Desktop/FileCheck/Folder A", 
-                                          title = "Select a File", 
-                                          filetypes = (("Text files", 
-                                                        "*.txt*"), 
-                                                       ("all files", 
-                                                        "*.*")))
+        self.btn_add = tk.Button(self.master,width=12,height=2,text='Browse',command=lambda:sourceFolder(self))        
+        self.btn_add.grid(row=4,column=0,padx=(10,10),pady=(10,10),sticky=W)
+        
+        self.btn_add = tk.Button(self.master,width=12,height=2,text='Browse',command=lambda:destinationFolder(self)) 
+        self.btn_add.grid(row=6,column=0,padx=(10,10),pady=(10,10),sticky=W)
 
-def browseFiles2(): 
-    filename = filedialog.askopenfilename(initialdir = "/Users/lyonb/Desktop/FileCheck/Folder B", 
-                                          title = "Select a File", 
-                                          filetypes = (("Text files", 
-                                                        "*.txt*"), 
-                                                       ("all files", 
-                                                        "*.*")))
+        self.btn_add = tk.Button(self.master,width=12,height=2,text='Transfer')#,command= fileTransfer(self))
+        self.btn_add.grid(row=4,column=2,padx=(10,10),pady=(10,10),sticky=W)
 
-def FileCheck():
-    filename = '/Users/lyonb/Desktop/FileCheck/Folder A'
-    statbuf = os.stat(filename)
-    print("Modification Time: {}".format(statbuf.st_mtime))
+        self.btn_add = tk.Button(self.master,width=12,height=2,text='close',command= exit)
+        self.btn_add.grid(row=6,column=2,padx=(10,10),pady=(10,10),sticky=W)
 
-def FileCheck2():
-    filename = txt_body
-    statbuf = os.stat(filename)
-    print("Modification Time: {}".format(statbuf.st_mtime))
+
+        self.txt_fname = tk.Entry(self.master,text='')
+        self.txt_fname.grid(row=1,column=0,rowspan=1,columnspan=2,padx=(10,10),pady=(10,10),sticky=N+E+W)
+        
+        self.txt_lname = tk.Entry(self.master,text='')
+        self.txt_lname.grid(row=2,column=0,rowspan=1,columnspan=2,padx=(10,10),pady=(10,10),sticky=N+E+W)
+
+        self.lbl_user = tk.Label(self.master,text='Source folder: ')
+        self.lbl_user.grid(row=3,column=0,padx=(0,0),pady=(0,0))
+
+        self.lbl_user = tk.Label(self.master,text='Destination folder:')
+        self.lbl_user.grid(row=5,column=0,padx=(0,0),pady=(0,0))
+
+
+        def sourceFolder(self):
+            folder = filedialog.askdirectory()
+            self.txt_fname.delete(0, END)
+            self.txt_fname.insert(0, folder)
+
+
+
+        def destinationFolder(self):
+            folder = filedialog.askdirectory()
+            self.txt_lname.delete(0, END)
+            self.txt_lname.insert(0, folder)
+                
+                
+
+
+        def fileTransfer():
+            modification_time = os.path.getmtime(path)
+            local_time = time.ctime(modification_time)
+            #get all modified in folder
+            files = os.listdir(source)
+            for i in files:
+                shutil.copy(source+i, destination)
+            print("Last file modification time:", local_time) 
 
 
 
@@ -84,6 +81,17 @@ if __name__ == "__main__":
     root = tk.Tk()
     App = ParentWindow(root)
     root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
