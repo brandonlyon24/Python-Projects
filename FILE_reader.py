@@ -19,7 +19,7 @@ fromtimestamp
 
 
  
- """
+
 source = '/Users/lyonb/Desktop/Created Or Modified/'
 
 import shutil, sys, time, os
@@ -69,3 +69,23 @@ three = Button(root, text="3", width="15", height="5",command=fileMove)
 three.pack(side="left")
 
 root.mainloop()
+"""
+
+
+now=dt.datetime.now()
+ago=now-dt.timedelta(minutes=1440)
+passover=[]
+for root,dirs,files in os.walk('SourceFolder'):
+    for fname in files:
+        path=os.path.join(root,fname)
+        st=os.stat(path)
+        mtime=dt.datetime.fromtimestamp(st.st_mtime)
+        if mtime>ago:
+            passover.append(path)
+
+
+
+
+
+
+
