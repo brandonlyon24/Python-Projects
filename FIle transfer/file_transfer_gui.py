@@ -62,14 +62,14 @@ class ParentWindow(Frame):
 
         
 
-
+        # the folder with the new and modified file
         def sourceFolder(self):
             self.txt_source.delete(0, END)
             folder = filedialog.askdirectory()
             self.txt_source.insert(0, folder)
 
 
-
+        # the destination you want to move the folder 
         def destinationFolder(self):
             self.txt_destination.delete(0, END)
             folder = filedialog.askdirectory()
@@ -77,7 +77,7 @@ class ParentWindow(Frame):
 
 
 
-
+        # moves new or modified things to the destination folder in the past 24 hours 
         def fileTransfer(self):
             custom_source = self.txt_source.get()
             custom_destination = self.txt_destination.get()
